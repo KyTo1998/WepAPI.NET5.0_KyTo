@@ -83,6 +83,25 @@ namespace WebApi5._0.Controllers
                 return BadRequest();
             }
         }
-
+        [HttpDelete("{id}")]
+        public IActionResult DeleteGoods(String id) {
+            try
+            {
+                var goods = lstGoods.SingleOrDefault(x => x.idGoods == Guid.Parse(id));
+                if (goods == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                   lstGoods.Remove(goods);
+                    return Ok();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
