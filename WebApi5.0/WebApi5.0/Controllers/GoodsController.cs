@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebApi5._0.Controllers.Model;
+using WebApi5._0.Model;
 
 namespace WebApi5._0.Controllers
 {
@@ -11,7 +11,7 @@ namespace WebApi5._0.Controllers
     [ApiController]
     public class GoodsController : ControllerBase
     {
-        public static List<goods> lstGoods = new List<goods>();
+        public static List<goodsModel> lstGoods = new List<goodsModel>();
 
         [HttpGet]
         public IActionResult GetlistGoods() { 
@@ -22,14 +22,14 @@ namespace WebApi5._0.Controllers
         public IActionResult GetGoodsForId(string id) {
             try
             {
-                var goods = lstGoods.SingleOrDefault(x => x.idGoods == Guid.Parse(id));
-                if (goods == null)
+                var goodsModels = lstGoods.SingleOrDefault(x => x.goodsId == Guid.Parse(id));
+                if (goodsModels == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(goods);
+                    return Ok(goodsModels);
                 }
             }
             catch (Exception)
@@ -41,14 +41,13 @@ namespace WebApi5._0.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostGoods(goodsTec tec) {
+        public IActionResult PostGoods(goodsModel tec) {
             try
             {
-                var goods = new goods
+                var goods = new goodsModel
                 {
-                    idGoods = Guid.NewGuid(),
-                    nameGoodsTec = tec.nameGoodsTec,
-                    riceGoodsTec = tec.riceGoodsTec
+                    goodsName = tec.goodsName,
+                    goodsPrice = tec.goodsPrice,
                 };
                 lstGoods.Add(goods);
                 return Ok(new { 
@@ -62,20 +61,20 @@ namespace WebApi5._0.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult EditGoods(String id, goods goodsEdits) {
+        public IActionResult EditGoods(String id, goodsModel goodsEdits) {
             try
             {
-                var goodsEdit = lstGoods.SingleOrDefault(x => x.idGoods == Guid.Parse(id));
+                var goodsEdit = lstGoods.SingleOrDefault(x => x.goodsId == Guid.Parse(id));
                 if(goodsEdit == null)
                 {
                     return NotFound();
                 }
-                if(id != goodsEdit.idGoods.ToString())
+                if(id != goodsEdit.goodsId.ToString())
                 {
                     return BadRequest();
                 }
-                goodsEdit.nameGoodsTec = goodsEdits.nameGoodsTec;
-                goodsEdit.riceGoodsTec = goodsEdits.riceGoodsTec;
+                goodsEdit.goodsName = goodsEdits.goodsName;
+                goodsEdit.goodsName = goodsEdits.goodsName;
                 return Ok();
             }
             catch (Exception)

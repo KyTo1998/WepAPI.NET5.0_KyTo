@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi5._0.Data;
 
 namespace WebApi5._0
 {
@@ -28,6 +30,12 @@ namespace WebApi5._0
         {
 
             services.AddControllers();
+
+            services.AddDbContext<myDbContext>(option =>
+            {
+                option.UseSqlServer(Configuration.GetConnectionString("MyDb"));
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi5._0", Version = "v1" });
