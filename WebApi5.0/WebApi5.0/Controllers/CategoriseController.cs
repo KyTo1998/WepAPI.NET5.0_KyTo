@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using WebApi5._0.Data;
@@ -38,6 +39,7 @@ namespace WebApi5._0.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult createCategories(categoriesModel categories)
         {
             try
