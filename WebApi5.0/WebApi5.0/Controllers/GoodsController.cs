@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebApi5._0.Data;
 using WebApi5._0.Model;
 
 namespace WebApi5._0.Controllers
@@ -11,6 +12,7 @@ namespace WebApi5._0.Controllers
     [ApiController]
     public class GoodsController : ControllerBase
     {
+
         public static List<goodsModel> lstGoods = new List<goodsModel>();
 
         [HttpGet]
@@ -47,6 +49,9 @@ namespace WebApi5._0.Controllers
                 var goods = new goodsModel
                 {
                     goodsName = tec.goodsName,
+                    goodsCategory = tec.goodsCategory,
+                    goodsDescribe = tec.goodsDescribe,
+                    goodsSaleOff = tec.goodsSaleOff,
                     goodsPrice = tec.goodsPrice,
                 };
                 lstGoods.Add(goods);
@@ -61,15 +66,16 @@ namespace WebApi5._0.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult EditGoods(String id, goodsModel goodsEdits) {
+        public IActionResult EditGoods(String id, goodsModel goodsEdits)
+        {
             try
             {
                 var goodsEdit = lstGoods.SingleOrDefault(x => x.goodsId == Guid.Parse(id));
-                if(goodsEdit == null)
+                if (goodsEdit == null)
                 {
                     return NotFound();
                 }
-                if(id != goodsEdit.goodsId.ToString())
+                if (id != goodsEdit.goodsId.ToString())
                 {
                     return BadRequest();
                 }

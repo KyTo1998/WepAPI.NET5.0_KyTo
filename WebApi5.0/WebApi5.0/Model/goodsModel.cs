@@ -13,5 +13,7 @@ namespace WebApi5._0.Model
         [Range(0, double.MaxValue)]
         public double goodsPrice { get; set; }
         public byte goodsSaleOff { get; set; }
+
+        public string CategoriesName { get; set; }
     }
 }

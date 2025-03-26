@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi5._0.Data;
+using WebApi5._0.Services;
 
 namespace WebApi5._0
 {
@@ -30,16 +31,24 @@ namespace WebApi5._0
         {
 
             services.AddControllers();
-
             services.AddDbContext<myDbContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("MyDb"));
             });
 
-            services.AddSwaggerGen(c =>
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddScoped<IGoodsRepository, GoodsRepository>();
+
+           /* services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi5._0", Version = "v1" });
+            });*/
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API WSVAP (WebSmartView)", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
             });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
